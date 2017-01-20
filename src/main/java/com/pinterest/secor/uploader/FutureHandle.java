@@ -23,14 +23,14 @@ import java.util.concurrent.Future;
  *
  * @author Liam Stewart (liam.stewart@gmail.com)
  */
-public class FutureHandle<T> implements Handle<T> {
+public class FutureHandle<T> extends RetryHandle<T> {
     private Future<T> mFuture;
 
     public FutureHandle(Future<T> f) {
         mFuture = f;
     }
 
-    public T get() throws Exception {
+    public T _get() throws Exception {
         return mFuture.get();
     }
 }
