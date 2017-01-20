@@ -25,14 +25,14 @@ import com.amazonaws.services.s3.transfer.model.UploadResult;
  *
  * @author Liam Stewart (liam.stewart@gmail.com)
  */
-public class S3UploadHandle implements Handle<UploadResult> {
+public class S3UploadHandle extends RetryHandle<UploadResult> {
     private Upload mUpload;
 
     public S3UploadHandle(Upload u) {
         mUpload = u;
     }
 
-    public UploadResult get() throws Exception {
+    public UploadResult _get() throws Exception {
         return mUpload.waitForUploadResult();
     }
 }
