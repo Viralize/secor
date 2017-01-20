@@ -18,8 +18,15 @@ package com.pinterest.secor.parser;
 
 import com.pinterest.secor.common.SecorConfig;
 import com.pinterest.secor.message.Message;
+import com.pinterest.secor.parser.exceptions.DateFieldParsingException;
+import jdk.nashorn.internal.runtime.ParserException;
 import net.minidev.json.JSONObject;
 import net.minidev.json.JSONValue;
+import org.apache.commons.lang.time.DateUtils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * JsonMessageParser extracts timestamp field (specified by 'message.timestamp.name')
@@ -27,10 +34,13 @@ import net.minidev.json.JSONValue;
  */
 public class JsonMessageParser extends TimestampedMessageParser {
     private final boolean m_timestampRequired;
+    private String inputPattern;
+
 
     public JsonMessageParser(SecorConfig config) {
         super(config);
         m_timestampRequired = config.isMessageTimestampRequired();
+        inputPattern = mConfig.getMessageTimestampInputPattern();
     }
 
     @Override
@@ -39,12 +49,27 @@ public class JsonMessageParser extends TimestampedMessageParser {
         if (jsonObject != null) {
             Object fieldValue = getJsonFieldValue(jsonObject);
             if (fieldValue != null) {
-                return toMillis(Double.valueOf(fieldValue.toString()).longValue());
+                if(inputPattern != null){
+                    try{
+                        return DateUtils.parseDate(fieldValue.toString(), new String[]{inputPattern}).getTime();
+                    } catch (ParseException e) {
+                        throw new DateFieldParsingException("Unable to parse Date field", e);
+                    }
+                }else{
+                    return toMillis(Double.valueOf(fieldValue.toString()).longValue());
+                }
+
             }
         } else if (m_timestampRequired) {
             throw new RuntimeException("Missing timestamp field for message: " + message);
         }
         return 0;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Date parsed = DateUtils.parseDate("2016-01-01T10:00:01.123456", new String[]{"yyyy-MM-dd'T'HH:mm:ss.SSSSSS"});
+        System.out.println(parsed.getTime());
+
     }
 
 }
