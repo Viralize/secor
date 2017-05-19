@@ -343,6 +343,10 @@ public class SecorConfig {
     	return getString("swift.public");
     }
 
+    public String getSwiftRegion() {
+        return getString("swift.region", "DFW");
+    }
+
     public String getSwiftPort() {
     	return getString("swift.port");
     }
