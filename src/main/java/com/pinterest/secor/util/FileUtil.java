@@ -137,11 +137,13 @@ public class FileUtil {
             }
             prefix = "swift://" + container + ".GENERICPROJECT/" + config.getSwiftPath();
         } else if (config.getCloudService().equals("S3")) {
-                prefix = config.getS3Prefix();
+            prefix = config.getS3Prefix();
         } else if (config.getCloudService().equals("GS")) {
             prefix = "gs://" + config.getGsBucket() + "/" + config.getGsPath();
         } else if (config.getCloudService().equals("Azure")) {
             prefix = "azure://" + config.getAzureContainer() + "/" + config.getAzurePath();
+        } else if (config.getCloudService().equals("Subprocess")) {
+            prefix = config.getSubprocessPath();
         }
         return prefix;
     }
