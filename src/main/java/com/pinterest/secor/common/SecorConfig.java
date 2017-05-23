@@ -167,6 +167,10 @@ public class SecorConfig {
         return getInt("secor.messages.per.second");
     }
 
+    public String[] getSubprocessCommand() {
+        return getStringArray("secor.subprocess.command");
+    }
+
     public String getS3FileSystem() { return getString("secor.s3.filesystem"); }
 
     public boolean getSeparateContainersForTopics() {
@@ -179,6 +183,10 @@ public class SecorConfig {
 
     public String getSwiftPath() {
         return getString("secor.swift.path");
+    }
+
+    public String getSubprocessPath() {
+        return getString("secor.subprocess.path");
     }
 
     public String getS3Bucket() {
