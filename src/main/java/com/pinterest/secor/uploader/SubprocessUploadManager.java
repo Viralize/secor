@@ -68,7 +68,7 @@ public class SubprocessUploadManager extends UploadManager {
                 int exitValue;
 
                 try {
-                    Process exec = Runtime.getRuntime().exec((String[])commandLine.toArray());
+                    Process exec = Runtime.getRuntime().exec(commandLine.toArray(new String[commandLine.size()]));
                     exec.waitFor();
                     exitValue = exec.exitValue();
                 } catch (IOException e) {
