@@ -32,7 +32,7 @@ Edit `src/main/config/*.properties` files to specify parameters describing the e
 # By default this will install the "release" (Kafka 0.10 profile)
 mvn package
 mkdir ${SECOR_INSTALL_DIR} # directory to place Secor binaries in.
-tar -zxvf target/secor-0.1-SNAPSHOT-bin.tar.gz -C ${SECOR_INSTALL_DIR}
+tar -zxvf target/secor-0.26-bin.tar.gz -C ${SECOR_INSTALL_DIR}
 
 # To use the Kafka 0.8 client you should use the kafka-0.8-dev profile
 mvn -Pkafka-0.8-dev package
@@ -50,7 +50,7 @@ cd ${SECOR_INSTALL_DIR}
 java -ea -Dsecor_group=secor_backup \
   -Dlog4j.configuration=log4j.prod.properties \
   -Dconfig=secor.prod.backup.properties \
-  -cp secor-0.1-SNAPSHOT.jar:lib/* \
+  -cp secor-0.26.jar:lib/* \
   com.pinterest.secor.main.ConsumerMain
 ```
 
@@ -114,32 +114,39 @@ Secor comes with a number of tools implementing interactions with the environmen
 Log file printer displays the content of a log file.
 
 ```sh
-java -ea -Dlog4j.configuration=log4j.prod.properties -Dconfig=secor.prod.backup.properties -cp "secor-0.1-SNAPSHOT.jar:lib/*" com.pinterest.secor.main.LogFilePrinterMain -f s3n://bucket/path
+java -ea -Dlog4j.configuration=log4j.prod.properties -Dconfig=secor.prod.backup.properties -cp "secor-0.26.jar:lib/*" com.pinterest.secor.main.LogFilePrinterMain -f s3n://bucket/path
 ```
 
 ##### Log file verifier
 Log file verifier checks the consistency of log files.
 
 ```sh
-java -ea -Dlog4j.configuration=log4j.prod.properties -Dconfig=secor.prod.backup.properties -cp "secor-0.1-SNAPSHOT.jar:lib/*" com.pinterest.secor.main.LogFileVerifierMain -t topic -q
+java -ea -Dlog4j.configuration=log4j.prod.properties -Dconfig=secor.prod.backup.properties -cp "secor-0.26.jar:lib/*" com.pinterest.secor.main.LogFileVerifierMain -t topic -q
 ```
 
 ##### Partition finalizer
 Topic finalizer writes _SUCCESS files to date partitions that very likely won't be receiving any new messages and (optionally) adds the corresponding dates to [Hive] through [Qubole] API.
 
 ```sh
-java -ea -Dlog4j.configuration=log4j.prod.properties -Dconfig=secor.prod.backup.properties -cp "secor-0.1-SNAPSHOT.jar:lib/*" com.pinterest.secor.main.PartitionFinalizerMain
+java -ea -Dlog4j.configuration=log4j.prod.properties -Dconfig=secor.prod.backup.properties -cp "secor-0.26.jar:lib/*" com.pinterest.secor.main.PartitionFinalizerMain
 ```
 
 ##### Progress monitor
 Progress monitor exports offset consumption lags per topic partition to [OpenTSDB] / [statsD]. Lags track how far Secor is behind the producers.
 
 ```sh
-java -ea -Dlog4j.configuration=log4j.prod.properties -Dconfig=secor.prod.backup.properties -cp "secor-0.1-SNAPSHOT.jar:lib/*" com.pinterest.secor.main.ProgressMonitorMain
+java -ea -Dlog4j.configuration=log4j.prod.properties -Dconfig=secor.prod.backup.properties -cp "secor-0.26.jar:lib/*" com.pinterest.secor.main.ProgressMonitorMain
 ```
 
 Set `monitoring.interval.seconds` to a value larger than 0 to run in a loop, exporting stats every `monitoring.interval.seconds` seconds.
 
+## Viralize's changes
+Changes on top of v0.26 from Pinterest:
+
+- `com.pinterest.secor.monitoring.VoidMetricCollector` has been introduced as an alternative to `com.pinterest.secor.monitoring.OstrichMetricCollector`
+- `test-stage.sh` and `test-run.sh` have been introduced to simplify the local testing of Secor
+  - `test-stage.sh` copies the the jar file and the dependencies into the `bin` subdirectory and copy the configuration files from `config.tar.gz`into `bin/config`
+  - `test-run.sh` cleans the environment and starts the server
 
 ## Detailed design
 
