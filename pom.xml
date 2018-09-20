@@ -366,11 +366,9 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>git</executable>
+                            <executable>echo</executable>
                             <arguments>
-                                <argument>log</argument>
-                                <argument>--pretty=format:build_revision=%H</argument>
-                                <argument>-n1</argument>
+                                <argument>build_revision=034aaba0b66c87e5724a5e8e2ff4c4903f913ecb</argument>
                             </arguments>
                             <outputFile>target/build.properties</outputFile>
                         </configuration>
@@ -403,11 +401,9 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>git</executable>
+                            <executable>echo</executable>
                             <arguments>
-                                <argument>log</argument>
-                                <argument>--pretty=format:build_revision=%H</argument>
-                                <argument>-n1</argument>
+                                <argument>build_revision=034aaba0b66c87e5724a5e8e2ff4c4903f913ecb</argument>
                             </arguments>
                             <outputFile>target/classes/com/pinterest/secor/common/build.properties</outputFile>
                         </configuration>
