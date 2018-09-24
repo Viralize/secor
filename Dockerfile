@@ -11,6 +11,7 @@ COPY src /usr/src/secor/src
 COPY pom.xml /usr/src/secor
 RUN mvn -f /usr/src/secor/pom.xml package -DskipTests=true
 
+# due to problems with hadoop libs, do not use jre > 8
 FROM openjdk:8-jre-alpine
 
 RUN mkdir -p /opt/secor
