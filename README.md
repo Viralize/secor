@@ -147,6 +147,7 @@ Changes on top of v0.26 from Pinterest:
 - `test-stage.sh` and `test-run.sh` have been introduced to simplify the local testing of Secor
   - `test-stage.sh` copies the the jar file and the dependencies into the `bin` subdirectory and copy the configuration files from `config.tar.gz`into `bin/config`
   - `test-run.sh` cleans the environment and starts the server
+- `Docker` file added to build and run secor
 
 ## Detailed design
 

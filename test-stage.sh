@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# Copies the the jar file and the dependencies into the bin subdirectory
+# and copy the configuration files from config.tar.gz into bin/config
+
 SECOR_INSTALL_DIR="./bin"
 
 if [ -e ${SECOR_INSTALL_DIR} ]; then

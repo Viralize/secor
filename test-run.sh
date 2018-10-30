@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# Cleans the environment and starts the server
+
 trap cleanup 1 2 3 6
 
 cleanup() {

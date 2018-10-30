@@ -6,7 +6,7 @@ RUN echo -n | openssl s_client -connect maven.twttr.com:443 | \
 RUN keytool -import -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts \
     -storepass changeit -noprompt -alias twttrcert -file /tmp/twttrcert.crt
 
-# actualy do the compilation
+# actually do the compilation
 COPY src /usr/src/secor/src
 COPY pom.xml /usr/src/secor
 RUN mvn -f /usr/src/secor/pom.xml package -DskipTests=true
