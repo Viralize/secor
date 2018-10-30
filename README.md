@@ -143,7 +143,6 @@ Set `monitoring.interval.seconds` to a value larger than 0 to run in a loop, exp
 ## Viralize's changes
 Changes on top of v0.26 from Pinterest:
 
-- `com.pinterest.secor.monitoring.VoidMetricCollector` has been introduced as an alternative to `com.pinterest.secor.monitoring.OstrichMetricCollector`
 - `test-stage.sh` and `test-run.sh` have been introduced to simplify the local testing of Secor
   - `test-stage.sh` copies the the jar file and the dependencies into the `bin` subdirectory and copy the configuration files from `config.tar.gz`into `bin/config`
   - `test-run.sh` cleans the environment and starts the server
