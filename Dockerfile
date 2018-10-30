@@ -12,7 +12,7 @@ COPY pom.xml /usr/src/secor
 RUN mvn -f /usr/src/secor/pom.xml package -DskipTests=true
 
 # due to problems with hadoop libs, do not use jre > 8
-FROM openjdk:8-jre-alpine
+FROM openjdk:8-jre-slim
 
 RUN mkdir -p /opt/secor
 COPY --from=BUILD /usr/src/secor/target/secor-*-bin.tar.gz /opt/secor/
